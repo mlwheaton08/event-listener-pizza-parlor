@@ -12,7 +12,11 @@ const orders = [
       instructions: "half green peppers"
     }
 ]
+
+export const addNewOrder = (newOrder) => {
+  orders.push(newOrder)
+}
   
 export const getOrders = () => {
-    return orders.map(order => ({...order}))
+  return orders.map(order => ({...order}))
 }

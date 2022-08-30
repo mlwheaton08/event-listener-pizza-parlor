@@ -1,4 +1,4 @@
-import {getOrders} from './orders.js'
+import {getOrders, addNewOrder} from './orders.js'
 
 document.getElementById("app").innerHTML = `
 <h1>Peanut's Pizza Parlor</h1>
@@ -54,18 +54,18 @@ document.getElementById("app").innerHTML = `
 </div>
 `;
 
-const orders = getOrders();
 
 const displayOrders = () => {
+  const orders = getOrders()
   let HTML = '';
   for (const order of orders) {
     HTML += `
-    <div class="order">
-    <p>Order #${order.id}</p>
-    <p>Crust: ${order.crust}</p>
-    <p>Toppings: ${order.toppings}</p>
-    <p>Instructions: ${order.instructions}</p>
-    </div>
+      <div class="order">
+        <p>Order #${order.id}</p>
+        <p>Crust: ${order.crust}</p>
+        <p>Toppings: ${order.toppings}</p>
+        <p>Instructions: ${order.instructions}</p>
+      </div>
     `
   }
   document.getElementById('orders').innerHTML = HTML;
@@ -74,6 +74,7 @@ displayOrders()
 
 document.addEventListener("click", (e) => {
   if (e.target.id === "submitOrder") {
+    const orders = getOrders()
     const newId = orders.length + 1;
     const newCrust = document.querySelector("input[name=crust]:checked")?.value;
     const newToppings = [];
@@ -86,7 +87,7 @@ document.addEventListener("click", (e) => {
       toppings: newToppings,
       instructions: newInstructions
     };
-    orders.push(newOrder);
+    addNewOrder(newOrder)
     displayOrders()
   }
 })
