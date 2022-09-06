@@ -69,13 +69,21 @@ const displayOrders = () => {
     `
   }
   document.getElementById('orders').innerHTML = HTML;
-};
+}
 displayOrders()
+
+const getNewOrderId = () => {
+  const orders = getOrders()
+  let highestOrderId = 0
+    if(orders.length > 0) {
+      highestOrderId = orders.sort((a, b) => b.id - a.id)[0].id
+    }
+    return highestOrderId + 1
+}
 
 document.addEventListener("click", (e) => {
   if (e.target.id === "submitOrder") {
-    const orders = getOrders()
-    const newId = orders.length + 1;
+    const newId = getNewOrderId()
     const newCrust = document.querySelector("input[name=crust]:checked")?.value;
     const newToppings = [];
     const selectedToppings = document.querySelectorAll("input[name=toppings]:checked");
@@ -88,10 +96,9 @@ document.addEventListener("click", (e) => {
       instructions: newInstructions
     };
     addNewOrder(newOrder)
-    displayOrders()
   }
 })
 
-document.addEventListener("stateChanged", event => {
-  
+document.addEventListener("stateChanged", (e) => {
+  displayOrders()
 })
